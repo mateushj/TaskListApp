@@ -1,0 +1,53 @@
+# =========================
+# Visual Studio / .NET
+# =========================
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+bin/
+obj/
+**/bin/
+**/obj/
+*.db
+*.db-shm
+*.db-wal
+*.log
+*.vsconfig
+
+# =========================
+# Node / Angular
+# =========================
+node_modules/
+npm-debug.log*
+yarn-error.log*
+pnpm-lock.yaml
+package-lock.json
+dist/
+out-tsc/
+.angular/
+*.tsbuildinfo
+
+# =========================
+# VS Code
+# =========================
+.vscode/
+.history/
+
+# =========================
+# Docker
+# =========================
+**/docker-compose.override.yml
+**/docker-compose.override.yaml
+**/Dockerfile
+**/docker-compose*.yml
+**/docker-compose*.yaml
+*.log
+*.pid
+
+# =========================
+# Angular / Web build
+# =========================
+*.map
+*.local
