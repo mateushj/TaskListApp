@@ -1,0 +1,79 @@
+<div class="tasks-container mat-elevation-z2">
+  <h1 class="tasks-title">Lista de Tarefas</h1>
+
+  <div class="tasks-actions">
+    <button mat-raised-button color="primary" (click)="openDialog()">
+      <mat-icon>add</mat-icon> Adicionar Nova Tarefa
+    </button>
+
+    <mat-form-field appearance="outline" class="filter-input">
+      <mat-label>Filtrar por status</mat-label>
+      <mat-select [(ngModel)]="filterStatus" (selectionChange)="applyStatusFilter()">
+        <mat-option value="Todos">Todos</mat-option>
+        <mat-option *ngFor="let status of statusOptions" [value]="status">
+          {{ getStatusLabel(status) }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <p *ngIf="dataSource.filteredData.length === 0" class="no-tasks">Nenhuma tarefa encontrada.</p>
+
+  <div class="tasks-table-container" *ngIf="dataSource.filteredData.length > 0">
+    <table mat-table [dataSource]="dataSource" matSort class="full-width-table mat-elevation-z8">
+
+      <ng-container matColumnDef="title">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 20%;">Título</th>
+        <td mat-cell *matCellDef="let task">
+          <span #titleCell class="truncate" [matTooltip]="isTruncated(titleCell) ? task.title : ''">
+            {{ task.title }}
+          </span>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="description">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 35%;">Descrição</th>
+        <td mat-cell *matCellDef="let task">
+          <span #descriptionCell class="truncate" [matTooltip]="isTruncated(descriptionCell) ? task.description : ''">
+            {{ task.description }}
+          </span>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="dueDate">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 15%;">Data Prazo</th>
+        <td mat-cell *matCellDef="let task">
+          <span #dueDateCell class="truncate" [matTooltip]="isTruncated(dueDateCell) ? formatDate(task.dueDate) : ''">
+            {{ formatDate(task.dueDate) }}
+          </span>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
+        <td mat-cell *matCellDef="let task">
+          <span [ngClass]="statusClass(task.status)">
+            {{ getStatusLabel(task.status) }}
+          </span>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 15%;">Ações</th>
+        <td mat-cell *matCellDef="let task">
+          <button mat-icon-button color="accent" matTooltip="Editar tarefa" (click)="openDialog(task)">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button color="warn" matTooltip="Deletar tarefa" (click)="deleteTask(task)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Selecione a página de tarefas" showFirstLastButtons>
+    </mat-paginator>
+  </div>
+</div>

@@ -16,7 +16,10 @@ public class TaskItemRepository : ITaskItemRepository
     }
 
     public async Task<IEnumerable<TaskItemDto>> GetAllAsync()
-        => await _context.Tasks.AsNoTracking().Select(TaskItemMapper.AsDto()).ToListAsync();
+        => await _context.Tasks.AsNoTracking()
+            .OrderByDescending(x => x.CreatedAt)
+            .Select(TaskItemMapper.AsDto())
+            .ToListAsync();
 
     public async Task<TaskItem?> GetByIdAsync(Guid id)
         => await _context.Tasks.FindAsync(id);
@@ -29,7 +32,7 @@ public class TaskItemRepository : ITaskItemRepository
 
     public async Task UpdateAsync(TaskItem task)
     {
-        task.ModifiedAt = DateTime.Now;
+        task.ModifiedAt = DateTime.UtcNow;
         _context.Tasks.Update(task);
 
         _context.Entry(task).Property(t => t.CreatedAt).IsModified = false;

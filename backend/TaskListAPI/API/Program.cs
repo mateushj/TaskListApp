@@ -14,10 +14,16 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
 
+var configuration = new ConfigurationBuilder()
+    .SetBasePath(Path.Combine(Directory.GetCurrentDirectory(), "API"))
+    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+    .Build();
+
+var connectionString = configuration.GetConnectionString("DefaultConnection");
 // Database
 builder.Services.AddDbContext<TaskListDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
-
+    options.UseNpgsql(connectionString));
+builder.Services.AddHttpClient();
 // Dependency Injection
 builder.Services.AddScoped<ITaskItemRepository, TaskItemRepository>();
 builder.Services.AddScoped<ITaskItemService, TaskItemService>();

@@ -25,6 +25,7 @@
               }
             ],
             "styles": [
+              "src/custom-theme.scss",
               "src/styles.css"
             ],
             "server": "src/main.server.ts",
@@ -66,6 +67,9 @@
             "development": {
               "buildTarget": "task-list-app:build:development"
             }
+          },
+          "options": {
+            "proxyConfig": "proxy.conf.json" 
           },
           "defaultConfiguration": "development"
         },

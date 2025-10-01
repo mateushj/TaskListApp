@@ -37,7 +37,7 @@ public class TaskItemService : ITaskItemService
             Title = dto.Title,
             Description = dto.Description,
             DueDate = dto.DueDate,
-            Status = TaskItemStatus.Todo
+            Status = dto.Status
         };
         await _repository.AddAsync(task);
 

@@ -1,0 +1,43 @@
+<h2 mat-dialog-title class="dialog-title">
+  {{ data && data.id ? 'Editar Tarefa' : 'Adicionar Nova Tarefa' }}
+</h2>
+
+<mat-dialog-content class="dialog-content">
+
+  <mat-form-field appearance="outline" class="full-width-input first-field">
+    <mat-label>Título</mat-label>
+    <input matInput [(ngModel)]="localTask.title" required maxlength="200">
+    <mat-hint align="end">{{ localTask.title?.length || 0 }}/200</mat-hint>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="full-width-input">
+    <mat-label>Status</mat-label>
+    <mat-select [(ngModel)]="localTask.status" required>
+      <mat-option [value]="0">A Fazer</mat-option>
+      <mat-option [value]="1">Em Progresso</mat-option>
+      <mat-option [value]="2">Concluída</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="full-width-input">
+    <mat-label>Data prazo</mat-label>
+    <input matInput [matDatepicker]="picker" [(ngModel)]="localTask.dueDate" placeholder="Selecione a data">
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="full-width-input">
+    <mat-label>Descrição</mat-label>
+    <textarea matInput [(ngModel)]="localTask.description" rows="4" maxlength="1000"></textarea>
+    <mat-hint align="end">{{ localTask.description?.length || 0 }}/1000</mat-hint>
+  </mat-form-field>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end" class="dialog-actions">
+  <button mat-stroked-button color="warn" class="btn-cancel" (click)="onCancel()">
+    Cancelar
+  </button>
+  <button mat-raised-button color="primary" class="btn-save" [mat-dialog-close]="localTask" cdkFocusInitial>
+    Salvar
+  </button>
+</mat-dialog-actions>

@@ -1,6 +1,9 @@
 import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import localePt from '@angular/common/locales/pt';
+import { registerLocaleData } from '@angular/common';
 
+registerLocaleData(localePt, 'pt-BR');
 @Component({
   selector: 'app-root',
   imports: [RouterOutlet],
@@ -8,5 +11,5 @@ import { RouterOutlet } from '@angular/router';
   styleUrl: './app.css'
 })
 export class App {
-  protected readonly title = signal('task-list-app');
+  protected readonly title = signal('Lista de Tarefas');
 }
