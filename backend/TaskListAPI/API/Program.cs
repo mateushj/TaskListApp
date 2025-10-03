@@ -14,12 +14,19 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
 
-var configuration = new ConfigurationBuilder()
-    .SetBasePath(Path.Combine(Directory.GetCurrentDirectory(), "API"))
-    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-    .Build();
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll",
+        policy =>
+        {
+            policy
+                .AllowAnyOrigin() 
+                .AllowAnyMethod()
+                .AllowAnyHeader();
+        });
+});
 
-var connectionString = configuration.GetConnectionString("DefaultConnection");
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 // Database
 builder.Services.AddDbContext<TaskListDbContext>(options =>
     options.UseNpgsql(connectionString));
@@ -37,6 +44,14 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+}
+
+DatabaseWaiter.WaitForPostgres(connectionString);
+
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<TaskListDbContext>();
+    db.Database.Migrate();
 }
 
 app.UseHttpsRedirection();
