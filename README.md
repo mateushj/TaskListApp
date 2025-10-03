@@ -8,7 +8,7 @@ Aplicação de gerenciamento de tarefas com **frontend Angular** e **backend .NE
 
 | Camada         | Tecnologia / Ferramenta                   |
 |----------------|-----------------------------------------|
-| Backend        | .NET 8 Web API, C#                       |
+| Backend        | .NET 8 Web API, C#, Swagger                        |
 | Frontend       | Angular 20, Angular Material, SPA       |
 | Banco de Dados | PostgreSQL                             |
 | Container      | Docker, Docker Compose                    |
