@@ -36,17 +36,6 @@ out-tsc/
 .history/
 
 # =========================
-# Docker
-# =========================
-**/docker-compose.override.yml
-**/docker-compose.override.yaml
-**/Dockerfile
-**/docker-compose*.yml
-**/docker-compose*.yaml
-*.log
-*.pid
-
-# =========================
 # Angular / Web build
 # =========================
 *.map
