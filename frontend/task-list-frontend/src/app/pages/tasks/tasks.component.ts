@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { TaskItem, TaskItemStatus, TaskStatusLabel } from '../../models/task-item.model';
 import { TasksService } from '../../services/tasks.service';
 import { CommonModule, formatDate } from '@angular/common';
@@ -54,7 +54,7 @@ export class TasksComponent implements OnInit, AfterViewInit {
 
     dataSource = new MatTableDataSource<TaskItem>([]);
 
-    constructor(private taskService: TasksService, public dialog: MatDialog, private snackBar: MatSnackBar) { }
+    constructor(private taskService: TasksService, public dialog: MatDialog, private snackBar: MatSnackBar, private cdr: ChangeDetectorRef) { }
 
     ngOnInit() {
         this.dataSource.filterPredicate = (data: any, filter: string) => {
@@ -71,6 +71,7 @@ export class TasksComponent implements OnInit, AfterViewInit {
         if (this.sort) {
             this.dataSource.sort = this.sort;
         }
+        this.cdr.detectChanges();
     }
 
     loadTasks() {
@@ -171,11 +172,6 @@ export class TasksComponent implements OnInit, AfterViewInit {
                 }
             }
         });
-    }
-
-    get filteredTasks() {
-        if (this.filterStatus === 'Todos') return this.tasks;
-        return this.tasks.filter(t => t.status === this.filterStatus);
     }
 
     getStatusLabel(status: TaskItemStatus) {

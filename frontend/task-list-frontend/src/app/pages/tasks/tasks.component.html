@@ -19,7 +19,7 @@
 
   <p *ngIf="dataSource.filteredData.length === 0" class="no-tasks">Nenhuma tarefa encontrada.</p>
 
-  <div class="tasks-table-container" *ngIf="dataSource.filteredData.length > 0">
+  <div class="tasks-table-container" [hidden]="dataSource.filteredData.length === 0">
     <table mat-table [dataSource]="dataSource" matSort class="full-width-table mat-elevation-z8">
 
       <ng-container matColumnDef="title">
