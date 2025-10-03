@@ -17,7 +17,7 @@ Aplicação de gerenciamento de tarefas com **frontend Angular** e **backend .NE
 | Funcionalidades Extras | matSort, matPaginator             |
 
 ## Estrutura do Projeto
-
+```text
 TaskListApp/
 │
 ├─ backend/TaskListAPI/             # Backend .NET 8 (API REST)
@@ -30,7 +30,7 @@ TaskListApp/
 │   └─ ...                           # Código Angular, package.json, etc.
 │
 └─ docker-compose.yml               # Orquestração de containers
-
+```
 ---
 
 ## Funcionalidades
