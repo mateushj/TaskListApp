@@ -1,0 +1,33 @@
+services:
+  db:
+    image: postgres:16
+    container_name: task-list-db
+    restart: always
+    environment:
+      POSTGRES_USER: taskuser
+      POSTGRES_PASSWORD: taskuser
+      POSTGRES_DB: tasklistdb
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  backend:
+    build: ./backend/TaskListAPI
+    container_name: task-list-backend
+    ports:
+      - "5000:5000"
+    environment:
+      - ConnectionStrings__DefaultConnection=Host=db;Database=tasklistdb;Username=taskuser;Password=taskuser;Port=5432
+      - ASPNETCORE_URLS=http://+:5000
+
+  frontend:
+    build: ./frontend/task-list-frontend
+    container_name: task-list-frontend
+    ports:
+      - "4200:80"
+    depends_on:
+      - backend
+
+volumes:
+  pgdata:
